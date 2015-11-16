@@ -33,6 +33,14 @@ public class HomeController {
 	public List<Category> categorys( ) {
 		return categoryService.findAll();
 	}
+	
+	/***
+	 * 入库操作
+	 * @param cid
+	 * @param num
+	 * @param price
+	 * @return
+	 */
 	@RequestMapping(value = "buy")
 	@ResponseBody
 	public Map<String,String> buy(Long cid,Integer num,Double price ) {
@@ -50,6 +58,15 @@ public class HomeController {
 		map.put("tip", "入库成功！");
 		return  map;
 	}
+	
+	
+	/***
+	 * 出库操作
+	 * @param cid
+	 * @param num
+	 * @param price
+	 * @return
+	 */
 	@RequestMapping(value = "sell")
 	@ResponseBody
 	public Map<String,String> sell(Long cid,Integer num,Double price ) {
@@ -71,6 +88,12 @@ public class HomeController {
 		map.put("tip", "出库成功！");
 		return  map;
 	}
+	/***
+	 * 查交易明细
+	 * @param s
+	 * @param e
+	 * @return
+	 */
 	@RequestMapping(value = "list")
 	@ResponseBody
 	public List<Record> list(String s,String e ) {
