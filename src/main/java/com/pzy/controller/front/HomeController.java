@@ -1,4 +1,5 @@
 package com.pzy.controller.front;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -6,6 +7,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,7 +36,26 @@ public class HomeController {
 	public List<Category> categorys( ) {
 		return categoryService.findAll();
 	}
-	
+	@RequestMapping(value = "categorys/{id}")
+	@ResponseBody
+	public List<Category> categorys( @PathVariable Long id) {
+		List list= new ArrayList<Category>();
+		if(id==null)
+			return categoryService.findAll();
+		else {
+			list.add(categoryService.find(id));
+			return list;
+		}
+	}
+	@RequestMapping(value = "category/{id}")
+	@ResponseBody
+	public Category category( @PathVariable Long id) {
+		if(id==null)
+			return null;
+		else {
+			return categoryService.find(id);
+		}
+	}
 	/***
 	 * 入库操作
 	 * @param cid
