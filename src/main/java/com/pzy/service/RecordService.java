@@ -1,6 +1,7 @@
 
 package com.pzy.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -34,20 +35,23 @@ public class RecordService {
         return (List<Record>) recordRepository.findAll();
     }
     
-    public Page<Record> findAll(final int pageNumber, final int pageSize,final String name){
-        PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
-       
+    public List<Record> findAll(final Date b,final Date e,final String type){
         Specification<Record> spec = new Specification<Record>() {
              public Predicate toPredicate(Root<Record> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
              Predicate predicate = cb.conjunction();
-             if (name != null) {
-                  predicate.getExpressions().add(cb.like(root.get("name").as(String.class), name+"%"));
+             if (b != null) {
+                  predicate.getExpressions().add(cb.greaterThanOrEqualTo(root.get("createDate").as(Date.class), b));
+             }
+             if (e != null) {
+                 predicate.getExpressions().add(cb.lessThanOrEqualTo(root.get("createDate").as(Date.class),e));
+             }
+             if (type != null) {
+                 predicate.getExpressions().add(cb.equal(root.get("type").as(String.class),type));
              }
              return predicate;
              }
         };
-        Page<Record> result = (Page<Record>) recordRepository.findAll(spec, pageRequest);
-        return result;
+        return recordRepository.findAll(spec,new Sort(Direction.DESC, "id"));
     	}
 		public void delete(Long id){
 			recordRepository.delete(id);

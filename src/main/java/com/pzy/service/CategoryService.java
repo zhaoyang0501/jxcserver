@@ -36,7 +36,6 @@ public class CategoryService {
     
     public Page<Category> findAll(final int pageNumber, final int pageSize,final String name){
         PageRequest pageRequest = new PageRequest(pageNumber - 1, pageSize, new Sort(Direction.DESC, "id"));
-       
         Specification<Category> spec = new Specification<Category>() {
              public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
              Predicate predicate = cb.conjunction();

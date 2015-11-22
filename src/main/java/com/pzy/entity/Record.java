@@ -28,6 +28,14 @@ public class Record {
 	private Integer num;
 	
 	private Double price;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User user;
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public String getType() {
 		return type;
 	}
@@ -54,7 +62,7 @@ public class Record {
 	}
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Category category;
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
 	private Date createDate;
 	
 	public Long getId() {
